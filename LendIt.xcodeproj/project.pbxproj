@@ -6,6 +6,11 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		641AFFCB2D8C73BF0039E7BB /* Sharing in Frameworks */ = {isa = PBXBuildFile; productRef = 641AFFCA2D8C73BF0039E7BB /* Sharing */; };
+		6461DB2C2D8C533C007A0341 /* ComposableArchitecture in Frameworks */ = {isa = PBXBuildFile; productRef = 6461DB2B2D8C533C007A0341 /* ComposableArchitecture */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXFileReference section */
 		6461DA352D8C50EF007A0341 /* LendIt.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LendIt.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -23,6 +28,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6461DB2C2D8C533C007A0341 /* ComposableArchitecture in Frameworks */,
+				641AFFCB2D8C73BF0039E7BB /* Sharing in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -65,6 +72,8 @@
 			);
 			name = LendIt;
 			packageProductDependencies = (
+				6461DB2B2D8C533C007A0341 /* ComposableArchitecture */,
+				641AFFCA2D8C73BF0039E7BB /* Sharing */,
 			);
 			productName = LendIt;
 			productReference = 6461DA352D8C50EF007A0341 /* LendIt.app */;
@@ -94,6 +103,10 @@
 			);
 			mainGroup = 6461DA2C2D8C50EF007A0341;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				6461DB2A2D8C533C007A0341 /* XCRemoteSwiftPackageReference "swift-composable-architecture" */,
+				641AFFC92D8C73BF0039E7BB /* XCRemoteSwiftPackageReference "swift-sharing" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 6461DA362D8C50EF007A0341 /* Products */;
 			projectDirPath = "";
@@ -255,6 +268,7 @@
 				DEVELOPMENT_TEAM = YXXNH92P5F;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = "LendIt!";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -284,6 +298,7 @@
 				DEVELOPMENT_TEAM = YXXNH92P5F;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = "LendIt!";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -324,6 +339,38 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		641AFFC92D8C73BF0039E7BB /* XCRemoteSwiftPackageReference "swift-sharing" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/pointfreeco/swift-sharing.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.3.3;
+			};
+		};
+		6461DB2A2D8C533C007A0341 /* XCRemoteSwiftPackageReference "swift-composable-architecture" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/pointfreeco/swift-composable-architecture.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.18.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		641AFFCA2D8C73BF0039E7BB /* Sharing */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 641AFFC92D8C73BF0039E7BB /* XCRemoteSwiftPackageReference "swift-sharing" */;
+			productName = Sharing;
+		};
+		6461DB2B2D8C533C007A0341 /* ComposableArchitecture */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 6461DB2A2D8C533C007A0341 /* XCRemoteSwiftPackageReference "swift-composable-architecture" */;
+			productName = ComposableArchitecture;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 6461DA2D2D8C50EF007A0341 /* Project object */;
 }
