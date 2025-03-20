@@ -105,7 +105,7 @@ struct HomeView: View {
                       }
                     }
                     ToolbarItem(placement: .confirmationAction) {
-                      Button("Create") {
+                      Button("Add") {
                           store.send(.confirmAddLendedItemButtonTapped)
                       }
                     }
