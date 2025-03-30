@@ -27,6 +27,9 @@ struct MyTabFeature {
         Scope(state: \.home, action: \.home) {
             HomeFeature()
         }
+        Scope(state: \.items, action: \.items) {
+            ItemsFeature()
+        }
 
         Reduce { state, action in
             switch action {

@@ -53,7 +53,6 @@ struct ItemsFeature {
                 state.$items.withLock {
                     $0.append(newItem)
                 }
-
                 state.destination = nil
                 return .none
             case .destination:
