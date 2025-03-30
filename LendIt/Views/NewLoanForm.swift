@@ -1,5 +1,5 @@
 //
-//  LendForm.swift
+//  NewLoanForm.swift
 //  colockitchenrace
 //
 //  Created by Julien Rahier on 09/10/2023.
@@ -9,11 +9,10 @@ import ComposableArchitecture
 import SwiftUI
 
 @Reducer
-struct LendItemFormFeature {
-
+struct NewLoanFormFeature {
     @ObservableState
     struct State {
-        var wipLendItem: Item
+        var wipLoan: Loan
         var isNewCohouse: Bool = false
     }
 
@@ -33,21 +32,21 @@ struct LendItemFormFeature {
     }
 }
 
-struct LendItemFormView: View {
-    @Bindable var store: StoreOf<LendItemFormFeature>
+struct NewLoanFormView: View {
+    @Bindable var store: StoreOf<NewLoanFormFeature>
 
     var body: some View {
         Form {
             Section {
-                TextField("Lended item name", text: $store.wipLendItem.name)
+                TextField("Loan name", text: $store.wipLoan.name)
             }
         }
     }
 }
 
 #Preview {
-    LendItemFormView(
-        store: Store(initialState: LendItemFormFeature.State(wipLendItem: Item(id: UUID().uuidString, name: ""))) {
-            LendItemFormFeature()
+    NewLoanFormView(
+        store: Store(initialState: NewLoanFormFeature.State(wipLoan: Loan(id: UUID(), name: "New loan", startDate: Date(), endDate: Date().addingTimeInterval(86400)))) {
+            NewLoanFormFeature()
         })
 }

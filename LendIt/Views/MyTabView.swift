@@ -14,11 +14,13 @@ struct MyTabFeature {
     struct State {
         var selectedTab: Tab = .home
         var home = HomeFeature.State()
+        var items = ItemsFeature.State()
     }
 
     enum Action {
         case tabChanged(Tab)
         case home(HomeFeature.Action)
+        case items(ItemsFeature.Action)
     }
 
     var body: some ReducerOf<Self> {
@@ -31,7 +33,7 @@ struct MyTabFeature {
             case let .tabChanged(tab):
                 state.selectedTab = tab
                 return .none
-            case .home:
+            case .home, .items:
                 return .none
             }
         }
@@ -39,7 +41,7 @@ struct MyTabFeature {
 }
 
 enum Tab {
-    case home, challenges, cohouse
+    case home, items
 }
 
 struct MyTabView: View {
@@ -57,6 +59,16 @@ struct MyTabView: View {
                 Label("Home", systemImage: "house.fill")
             }
             .tag(Tab.home)
+            ItemsView(
+                store: self.store.scope(
+                    state: \.items,
+                    action: \.items
+                )
+            )
+            .tabItem {
+                Label("My items", systemImage: "house.fill")
+            }
+            .tag(Tab.items)
         }
     }
 }

@@ -14,19 +14,19 @@ struct HomeFeature {
 
     @Reducer
     enum Destination {
-        case addLendedItem(LendItemFormFeature)
+        case addLoan(NewLoanFormFeature)
     }
 
     @ObservableState
     struct State {
-        @Shared(.fileStorage(.lendedItems)) var lendedItems: [Item] = []
         @Presents var destination: Destination.State?
+        @Shared(.fileStorage(.loans)) var loans: [Loan] = []
     }
 
     enum Action: BindableAction {
-        case addLendedItemButtonTapped
+        case addLoanButtonTapped
         case binding(BindingAction<State>)
-        case confirmAddLendedItemButtonTapped
+        case confirmAddLoanButtonTapped
         case destination(PresentationAction<Destination.Action>)
         case dismissDestinationButtonTapped
     }
@@ -36,28 +36,28 @@ struct HomeFeature {
 
         Reduce { state, action in
             switch action {
-            case .addLendedItemButtonTapped:
-                state.destination = .addLendedItem(
-                    LendItemFormFeature.State(
-                        wipLendItem: Item(name: "")
+            case .addLoanButtonTapped:
+                state.destination = .addLoan(
+                    NewLoanFormFeature.State(
+                        wipLoan: Loan(id: UUID(), name: "", startDate: Date(), endDate: Date().addingTimeInterval(86400))
                     )
                 )
                 return .none
             case .binding:
                 return .none
-            case .confirmAddLendedItemButtonTapped:
-                guard case let .some(.addLendedItem(lendItemFormFeature)) = state.destination
+            case .confirmAddLoanButtonTapped:
+                guard case let .some(.addLoan(newLoanFormFeature)) = state.destination
                 else { return .none }
 
-                let newLendedItem = lendItemFormFeature.wipLendItem
-                state.$lendedItems.withLock {
-                    $0.append(newLendedItem)
+                let newLoan = newLoanFormFeature.wipLoan
+                state.$loans.withLock {
+                    $0.append(newLoan)
                 }
 
                 state.destination = nil
                 return .none
             case .destination:
-              return .none
+                return .none
             case .dismissDestinationButtonTapped:
                 state.destination = nil
                 return .none
@@ -73,44 +73,44 @@ struct HomeView: View {
     var body: some View {
         NavigationStack {
             List {
-                ForEach(store.lendedItems) { lendedItem in
-                    Text(lendedItem.name)
+                ForEach(store.loans) { loan in
+                    Text(loan.name)
                 }
                 .onDelete { indexSet in
-                    store.$lendedItems.withLock {
-                    $0.remove(atOffsets: indexSet)
-                  }
+                    store.$loans.withLock {
+                        $0.remove(atOffsets: indexSet)
+                    }
                 }
             }
             .navigationTitle("Lend it!")
             .toolbar {
-              ToolbarItem {
-                Button {
-                  store.send(.addLendedItemButtonTapped)
-                } label: {
-                  Image(systemName: "plus")
+                ToolbarItem {
+                    Button {
+                        store.send(.addLoanButtonTapped)
+                    } label: {
+                        Image(systemName: "plus")
+                    }
                 }
-              }
             }
             .sheet(
-              item: $store.scope(state: \.destination?.addLendedItem, action: \.destination.addLendedItem)
-            ) { addLendedItemStore in
-              NavigationStack {
-                  LendItemFormView(store: addLendedItemStore)
-                  .navigationTitle("New lended item")
-                  .toolbar {
-                    ToolbarItem(placement: .cancellationAction) {
-                      Button("Dismiss") {
-                        store.send(.dismissDestinationButtonTapped)
-                      }
-                    }
-                    ToolbarItem(placement: .confirmationAction) {
-                      Button("Add") {
-                          store.send(.confirmAddLendedItemButtonTapped)
-                      }
-                    }
-                  }
-              }
+                item: $store.scope(state: \.destination?.addLoan, action: \.destination.addLoan)
+            ) { addLoanStore in
+                NavigationStack {
+                    NewLoanFormView(store: addLoanStore)
+                        .navigationTitle("New lended item")
+                        .toolbar {
+                            ToolbarItem(placement: .cancellationAction) {
+                                Button("Dismiss") {
+                                    store.send(.dismissDestinationButtonTapped)
+                                }
+                            }
+                            ToolbarItem(placement: .confirmationAction) {
+                                Button("Add") {
+                                    store.send(.confirmAddLoanButtonTapped)
+                                }
+                            }
+                        }
+                }
             }
         }
     }

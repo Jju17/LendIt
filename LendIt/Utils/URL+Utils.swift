@@ -8,5 +8,6 @@
 import Foundation
 
 extension URL {
-    static let lendedItems = Self.documentsDirectory.appending(component: "lendedItems.json")
+    static let items = Self.documentsDirectory.appending(component: "items.json")
+    static let loans = Self.documentsDirectory.appending(component: "loans.json")
 }
