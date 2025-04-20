@@ -15,14 +15,15 @@ enum LoanStatus {
 }
 
 struct Loan: Codable, Identifiable, Equatable {
-    var id: UUID // identifiant unique du prêt
+    var id: UUID
     var name: String
-    var itemId: UUID? // lien vers l’objet prêté
-    var borrowerId: UUID? // lien vers l’emprunteur
-    var startDate: Date // date de début du prêt
-    var endDate: Date // date de fin prévue
-    var reviewRating: Int? // note laissée après le prêt, nullable si pas encore évalué
-    var comment: String? // commentaire optionnel
+    var borrowerName: String
+    var itemId: UUID?
+    var borrowerId: UUID?
+    var startDate: Date
+    var endDate: Date
+    var reviewRating: Int?
+    var comment: String?
 }
 
 extension Loan {

@@ -39,7 +39,13 @@ struct HomeFeature {
             case .addLoanButtonTapped:
                 state.destination = .addLoan(
                     NewLoanFormFeature.State(
-                        wipLoan: Loan(id: UUID(), name: "", startDate: Date(), endDate: Date().addingTimeInterval(86400))
+                        wipLoan: Loan(
+                            id: UUID(),
+                            name: "",
+                            borrowerName: "",
+                            startDate: Date(),
+                            endDate: Date().addingTimeInterval(86400)
+                        )
                     )
                 )
                 return .none
@@ -74,7 +80,7 @@ struct HomeView: View {
         NavigationStack {
             List {
                 ForEach(store.loans) { loan in
-                    Text(loan.name)
+                    LoanCellView(loan: loan)
                 }
                 .onDelete { indexSet in
                     store.$loans.withLock {

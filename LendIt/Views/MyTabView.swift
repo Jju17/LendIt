@@ -69,7 +69,7 @@ struct MyTabView: View {
                 )
             )
             .tabItem {
-                Label("My items", systemImage: "house.fill")
+                Label("My items", systemImage: "books.vertical.fill")
             }
             .tag(Tab.items)
         }

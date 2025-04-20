@@ -46,7 +46,17 @@ struct NewLoanFormView: View {
 
 #Preview {
     NewLoanFormView(
-        store: Store(initialState: NewLoanFormFeature.State(wipLoan: Loan(id: UUID(), name: "New loan", startDate: Date(), endDate: Date().addingTimeInterval(86400)))) {
+        store: Store(
+            initialState: NewLoanFormFeature.State(
+                wipLoan: Loan(
+                    id: UUID(),
+                    name: "New loan",
+                    borrowerName: "Julien",
+                    startDate: Date(),
+                    endDate: Date().addingTimeInterval(86400)
+                )
+            )
+        ) {
             NewLoanFormFeature()
         })
 }
