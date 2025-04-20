@@ -13,11 +13,13 @@ struct NewLoanFormFeature {
     @ObservableState
     struct State {
         var wipLoan: Loan
-        var isNewCohouse: Bool = false
+        @Shared(.fileStorage(.borrowers)) var borrowers: [Borrower] = []
+        @Shared(.fileStorage(.items)) var items: [Item] = []
     }
 
     enum Action: BindableAction, Equatable {
         case binding(BindingAction<State>)
+        case selectedItemChanged
     }
 
     var body: some ReducerOf<Self> {
@@ -26,6 +28,11 @@ struct NewLoanFormFeature {
         Reduce { state, action in
             switch action {
             case .binding:
+                return .none
+            case .selectedItemChanged:
+                if state.wipLoan.name.isEmpty {
+                    state.wipLoan.name = "My loan about \(state.wipLoan.itemName)"
+                }
                 return .none
             }
         }
@@ -39,7 +46,18 @@ struct NewLoanFormView: View {
         Form {
             Section {
                 TextField("Loan name", text: $store.wipLoan.name)
-                TextField("Borrower name", text: $store.wipLoan.borrowerName)
+                Picker("Item to lend", selection: $store.wipLoan.itemName) {
+                    ForEach(store.items) {
+                        Text($0.name)
+                            .tag($0.name)
+                    }
+                }
+                Picker("Borrower", selection: $store.wipLoan.borrowerName) {
+                    ForEach(store.borrowers) {
+                        Text($0.name)
+                            .tag($0.name)
+                    }
+                }
                 GeometryReader { geometry in
                     HStack {
                         Text("Start date")
@@ -57,7 +75,12 @@ struct NewLoanFormView: View {
                     }
                 }
                 DatePicker("End date", selection: $store.wipLoan.endDate, in: store.wipLoan.startDate..., displayedComponents: .date)
+                TextField("Comment", text: $store.wipLoan.comment, axis: .vertical)
+                    .lineLimit(2...8)
             }
+        }
+        .onChange(of: store.wipLoan.itemName) { oldValue, newValue in
+            store.send(.selectedItemChanged)
         }
     }
 }

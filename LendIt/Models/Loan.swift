@@ -18,12 +18,12 @@ struct Loan: Codable, Identifiable, Equatable {
     var id: UUID
     var name: String
     var borrowerName: String
-    var itemId: UUID?
+    var itemName: String = ""
     var borrowerId: UUID?
     var startDate: Date
     var endDate: Date
     var reviewRating: Int?
-    var comment: String?
+    var comment: String = ""
 }
 
 extension Loan {

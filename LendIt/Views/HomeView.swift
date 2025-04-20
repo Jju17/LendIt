@@ -21,6 +21,7 @@ struct HomeFeature {
     struct State {
         @Presents var destination: Destination.State?
         @Shared(.fileStorage(.loans)) var loans: [Loan] = []
+        @Shared(.fileStorage(.borrowers)) var borrowers: [Borrower] = []
     }
 
     enum Action: BindableAction {
@@ -42,7 +43,7 @@ struct HomeFeature {
                         wipLoan: Loan(
                             id: UUID(),
                             name: "",
-                            borrowerName: "",
+                            borrowerName: state.borrowers.first?.name ?? "",
                             startDate: Date(),
                             endDate: Date().addingTimeInterval(86400)
                         )
